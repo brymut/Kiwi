@@ -16,6 +16,10 @@ def forward_migrate_data(apps, schema_editor):
         tc_history.save()
 
 
+def backward_empty_callable(apps, schema_editor):
+    pass
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -34,7 +38,7 @@ class Migration(migrations.Migration):
             field=models.BooleanField(default=False),
         ),
 
-        migrations.RunPython(forward_migrate_data),
+        migrations.RunPython(forward_migrate_data, backward_empty_callable),
 
         migrations.RemoveField(
             model_name='historicaltestcase',
